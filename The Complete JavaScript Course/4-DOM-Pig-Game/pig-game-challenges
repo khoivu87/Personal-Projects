@@ -1,0 +1,6 @@
+/*
+Three challenges:
+1) If current user rolls two 6 faces in a row, he/she will lose all scores. After that, next player will play
+2) Add an input field so player can choose the winning score
+3) Add one more dice to the game -> two dices in total. Change how the game is played.
+*/
