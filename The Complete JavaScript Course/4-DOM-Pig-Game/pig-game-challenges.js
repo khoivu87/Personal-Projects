@@ -24,13 +24,23 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         // Update roundScore with dice value and assign to current score of active player
         roundScore += dice;
 
-        // Active player keeps rolling until he/ she get a number 1
-        if(dice !== 1) {
+        console.log("Dice: " + dice);
+        console.log("Last dice: " + lastDice);
+
+        if(lastDice === 6 && dice === 6) {
+            document.getElementById('score-' + activePlayer).textContent = '0';
+            scores[activePlayer] = 0;
+            document.getElementById('current-' + activePlayer).textContent = '0';
+            roundScore = 0;
+            nextPlayer();
+        }else if(dice !== 1) {
+            // Active player keeps rolling until he/ she get a number 1
             document.getElementById('current-' + activePlayer).textContent = roundScore;
         }else {
             nextPlayer();
         }
-        //console.log('Current player: ' + (activePlayer + 1));
+
+        lastDice = dice;
     }
 });
 
@@ -42,7 +52,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
         // If current player reaches 100 -> winner -> not -> next player's move
-        if(scores[activePlayer] >= 20) {
+        if(scores[activePlayer] >= 50) {
             // Change the player name to Winner!
             document.getElementById('name-' + activePlayer).textContent = 'Winner!';
 
@@ -101,15 +111,17 @@ function nextPlayer() {
     document.getElementById('current-1').textContent = '0';
 
     // Update UI
-    if(activePlayer === 0) {
+/*    if(activePlayer === 0) {
         document.querySelector('.player-0-panel').classList.remove('active');
         document.querySelector('.player-1-panel').classList.add('active');
     }else {
         document.querySelector('.player-0-panel').classList.add('active');
         document.querySelector('.player-1-panel').classList.remove('active');
-    }
+    }*/
 
-    // Toggle means if it's there -> remove, if it's NOT there -> add
-    //document.querySelector('.player-0-panel').classList.toggle('active');
-    //document.querySelector('.player-1-panel').classList.toggle('active');
+    document.querySelector('.dice').style.display = 'none';
+
+    //Toggle means if it's there -> remove, if it's NOT there -> add
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
 }
