@@ -40,6 +40,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             nextPlayer();
         }
 
+        // Add value to lastDice to compare on next roll
         lastDice = dice;
     }
 });
