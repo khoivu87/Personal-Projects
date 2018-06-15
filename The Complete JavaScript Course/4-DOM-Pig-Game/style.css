@@ -139,13 +139,14 @@ i {
 
 .btn-new { top: 45px;}
 .btn-roll { top: 403px;}
-.btn-hold { top: 467px;}
+.btn-hold { top: 450px;}
+.btn-score { top: 497px;}
 
 .final-score {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 520px;
+    top: 540px;
     color: #555;
     font-size: 18px;
     font-family: 'Lato';

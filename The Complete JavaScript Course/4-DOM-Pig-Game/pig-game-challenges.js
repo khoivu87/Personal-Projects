@@ -3,15 +3,25 @@ Three challenges:
 1) If current user rolls two 6 faces in a row, he/she will lose all scores. After that, next player will play
 2) Add an input field so player can choose the winning score
    If no winning score -> default: 100, else -> entered value
+   Add a button to set winningScore = entered value
+   Modify the new game button -> game only starts if new game btn is clicked
 3) Add one more dice to the game -> two dices in total. Change how the game is played.
 */
 
-var scores, roundScore, activePlayer, isPlaying, lastDice;
+var scores, roundScore, activePlayer, isPlaying, lastDice, winningScore;
 
-const WINNING_SCORE = 100;
-
-// Start the game with default values
+// Set default current and global scores, hide the dice
 init();
+
+// Click on new button to start the game
+/*document.querySelector('.btn-new').addEventListener('click', init)*/
+document.querySelector('.btn-new').addEventListener('click', function() {
+    init();
+    isPlaying = true;
+    document.querySelector('.btn-score').disabled = false;
+    document.getElementById('final-score').value = "";
+    console.log("Let the game begins");
+});
 
 // Action when click on the roll dice button
 document.querySelector('.btn-roll').addEventListener('click', function() {
@@ -55,21 +65,10 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         scores[activePlayer] += roundScore;
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
-        // Final score entered from the field
-        var enteredValue = document.querySelector('.final-score').value;
-        var finalScore;
+        console.log("Current winning score: " + winningScore);
 
-        console.log(enteredValue);
-
-        // If enteredValue is null, empty, text, blah blah blah -> 100, else = enteredValue
-        if(enteredValue) {
-            finalScore = enteredValue;
-        } else {
-            finalScore = WINNING_SCORE;
-        }
-
-        // If current player reaches 100 -> winner -> not -> next player's move
-        if(scores[activePlayer] >= finalScore) {
+        // If current player reaches winningScore -> winner -> not -> next player's move
+        if(scores[activePlayer] >= winningScore) {
             // Change the player name to Winner!
             document.getElementById('name-' + activePlayer).textContent = 'Winner!';
 
@@ -85,16 +84,29 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
     }
 });
 
-// Action when click on the new game button
-document.querySelector('.btn-new').addEventListener('click', init)
+// Action when click on the score button
+document.querySelector('.btn-score').addEventListener('click', function() {
+    if(isPlaying) {
+        // Final score entered from the field
+        var enteredValue = document.getElementById('final-score').value;
+
+        // If enteredValue is null, empty, text, blah blah blah -> 100, else = enteredValue
+        if(enteredValue) {
+            winningScore = enteredValue;
+        }
+
+        console.log("Score to win: " + winningScore);
+        document.querySelector('.btn-score').disabled = true;
+    }
+});
 
 // Function to initiate the game
 function init() {
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;
-    isPlaying = true;
     lastDice = 0;
+    winningScore = 100;
 
     // Hide the dice before game starts
     document.querySelector('.dice').style.display = 'none';
