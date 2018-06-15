@@ -2,10 +2,13 @@
 Three challenges:
 1) If current user rolls two 6 faces in a row, he/she will lose all scores. After that, next player will play
 2) Add an input field so player can choose the winning score
+   If no winning score -> default: 100, else -> entered value
 3) Add one more dice to the game -> two dices in total. Change how the game is played.
 */
 
 var scores, roundScore, activePlayer, isPlaying, lastDice;
+
+const WINNING_SCORE = 100;
 
 // Start the game with default values
 init();
@@ -52,8 +55,21 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         scores[activePlayer] += roundScore;
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
+        // Final score entered from the field
+        var enteredValue = document.querySelector('.final-score').value;
+        var finalScore;
+
+        console.log(enteredValue);
+
+        // If enteredValue is null, empty, text, blah blah blah -> 100, else = enteredValue
+        if(enteredValue) {
+            finalScore = enteredValue;
+        } else {
+            finalScore = WINNING_SCORE;
+        }
+
         // If current player reaches 100 -> winner -> not -> next player's move
-        if(scores[activePlayer] >= 50) {
+        if(scores[activePlayer] >= finalScore) {
             // Change the player name to Winner!
             document.getElementById('name-' + activePlayer).textContent = 'Winner!';
 
