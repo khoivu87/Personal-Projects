@@ -16,16 +16,19 @@ init();
 // Click on new button to start the game
 /*document.querySelector('.btn-new').addEventListener('click', init)*/
 document.querySelector('.btn-new').addEventListener('click', function() {
-    init();
+    resetValues();
+    freeSetScores()
     isPlaying = true;
-    document.querySelector('.btn-score').disabled = false;
-    document.getElementById('final-score').value = "";
+    
     console.log("Let the game begins");
 });
 
 // Action when click on the roll dice button
 document.querySelector('.btn-roll').addEventListener('click', function() {
     if(isPlaying) {
+        // Once the dice is rolled, you can't set score
+        blockSetScore();
+
         // Create a dice with random number from 1 -> 6
         var dice = Math.floor(Math.random() * 6) + 1;
 
@@ -93,41 +96,21 @@ document.querySelector('.btn-score').addEventListener('click', function() {
         // If enteredValue is null, empty, text, blah blah blah -> 100, else = enteredValue
         if(enteredValue) {
             winningScore = enteredValue;
+        }else {
+            document.getElementById('final-score').value = winningScore;
         }
 
         console.log("Score to win: " + winningScore);
-        document.querySelector('.btn-score').disabled = true;
+
+        // Once a score is set, block user from changing it
+        blockSetScore();
     }
 });
 
 // Function to initiate the game
 function init() {
-    scores = [0,0];
-    roundScore = 0;
-    activePlayer = 0;
-    lastDice = 0;
-    winningScore = 100;
-
-    // Hide the dice before game starts
-    document.querySelector('.dice').style.display = 'none';
-
-    // Set the scores to 0
-    document.getElementById('score-0').textContent = '0';
-    document.getElementById('score-1').textContent = '0';
-    document.getElementById('current-0').textContent = '0';
-    document.getElementById('current-1').textContent = '0';
-
-    // Set text back to player name
-    document.getElementById('name-0').textContent = 'Player 1';
-    document.getElementById('name-1').textContent = 'Player 2';
-
-    // Remove winner style
-    document.querySelector('.player-0-panel').classList.remove('winner');
-    document.querySelector('.player-1-panel').classList.remove('winner');
-
-    // Set the active player back to player 1 by default
-    document.querySelector('.player-1-panel').classList.remove('active');
-    document.querySelector('.player-0-panel').classList.add('active');
+    resetValues();
+    blockSetScore();
 }
 
 // Function to switch to next player's move
@@ -153,4 +136,46 @@ function nextPlayer() {
     //Toggle means if it's there -> remove, if it's NOT there -> add
     document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active');
+}
+
+// Function to reset all scores
+function resetValues() {
+    scores = [0,0];
+    roundScore = 0;
+    activePlayer = 0;
+    lastDice = 0;
+    winningScore = "";
+
+    // Hide the dice before game starts
+    document.querySelector('.dice').style.display = 'none';
+
+    // Set the scores to 0
+    document.getElementById('score-0').textContent = '0';
+    document.getElementById('score-1').textContent = '0';
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    // Set text back to player name
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+
+    // Remove winner style
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner');
+
+    // Set the active player back to player 1 by default
+    document.querySelector('.player-1-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.add('active');
+}
+
+// Function to disable user input on final-score field
+function blockSetScore() {
+    document.querySelector('.btn-score').disabled = true;
+    document.querySelector('.final-score').disabled = true;
+    document.getElementById('final-score').value = winningScore;
+}
+
+function freeSetScores() {
+    document.querySelector('.btn-score').disabled = false;
+    document.querySelector('.final-score').disabled = false;
 }
