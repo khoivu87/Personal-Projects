@@ -19,6 +19,7 @@ document.querySelector('.btn-new').addEventListener('click', function() {
     resetValues();
     freeSetScores()
     isPlaying = true;
+    winningScore = 100;
     
     console.log("Let the game begins");
 });
@@ -58,6 +59,8 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
         // Add value to lastDice to compare on next roll
         lastDice = dice;
+    }else {
+        alert("Click on NEW GAME to begin!");
     }
 });
 
@@ -84,6 +87,8 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         }else {
             nextPlayer();
         }
+    }else {
+        alert("Click on NEW GAME to begin!");
     }
 });
 
@@ -97,13 +102,16 @@ document.querySelector('.btn-score').addEventListener('click', function() {
         if(enteredValue) {
             winningScore = enteredValue;
         }else {
-            document.getElementById('final-score').value = winningScore;
+            // TO DO: need a loop here, if no score entered, keep asking
+            document.getElementById("final-score").value = 100;
         }
 
         console.log("Score to win: " + winningScore);
 
         // Once a score is set, block user from changing it
         blockSetScore();
+    }else {
+        alert("Click on NEW GAME to begin!");
     }
 });
 
@@ -168,14 +176,18 @@ function resetValues() {
     document.querySelector('.player-0-panel').classList.add('active');
 }
 
+// Function to set final score
+function setFinalScore() {
+
+}
+
 // Function to disable user input on final-score field
 function blockSetScore() {
-    document.querySelector('.btn-score').disabled = true;
     document.querySelector('.final-score').disabled = true;
     document.getElementById('final-score').value = winningScore;
 }
 
 function freeSetScores() {
-    document.querySelector('.btn-score').disabled = false;
     document.querySelector('.final-score').disabled = false;
+    document.getElementById('final-score').value = "";
 }
