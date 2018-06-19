@@ -1,10 +1,13 @@
-/*Google map resource:
+/*
+Google map resource:
 https://developers.google.com/maps/documentation/javascript/geolocation
 https://developers.google.com/maps/documentation/javascript/symbols
 initMap is not a function:
 https://stackoverflow.com/questions/32496382/typeerror-window-initmap-is-not-a-function
 W3Schools reource:
-https://www.w3schools.com/graphics/google_maps_overlays.asp*/
+https://www.w3schools.com/graphics/google_maps_overlays.asp
+https://www.w3schools.com/graphics/google_maps_events.asp
+*/
 
 // Initialize and add the map
 var map, infoWindow, marker, myLocation, hcm;
@@ -84,6 +87,12 @@ function initMap() {
                 map: map
             });
 
+            google.maps.event.addListener(marker,'click',function() {
+                var currentPos = map.getZoom();
+                map.setZoom(8);
+                map.setCenter(marker.getPosition());
+                window.setTimeout(function() {map.setZoom(currentPos);},10000);
+            });
         },
         function() {
             handleLocationError(true, infoWindow, map.getCenter());
