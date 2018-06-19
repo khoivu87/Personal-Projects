@@ -8,7 +8,7 @@ Three challenges:
 3) Add one more dice to the game -> two dices in total. Change how the game is played.
 */
 
-var scores, roundScore, activePlayer, isPlaying, lastDice, winningScore;
+var scores, roundScore, activePlayer, isPlaying, lastDice1, lastDice2, winningScore;
 
 // Set default current and global scores, hide the dice
 init();
@@ -17,7 +17,7 @@ init();
 /*document.querySelector('.btn-new').addEventListener('click', init)*/
 document.querySelector('.btn-new').addEventListener('click', function() {
     resetValues();
-    freeSetScores()
+    freeSetScores();
     isPlaying = true;
     winningScore = 100;
     
@@ -31,34 +31,45 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         blockSetScore();
 
         // Create a dice with random number from 1 -> 6
-        var dice = Math.floor(Math.random() * 6) + 1;
+        var dice1 = Math.floor(Math.random() * 6) + 1;
+        var dice2 = Math.floor(Math.random() * 6) + 1;
 
         // Update the dice in UI with respective image
-        var diceDOM = document.querySelector('.dice');
-        diceDOM.style.display = 'block';
-        diceDOM.src = 'dice-' + dice + '.png';
+        var diceDOM1 = document.getElementById('dice-1');
+        var diceDOM2 = document.getElementById('dice-2');
+
+        diceDOM1.style.display = 'block';
+        diceDOM2.style.display = 'block';
+
+        diceDOM1.src = 'dice-' + dice1 + '.png';
+        diceDOM2.src = 'dice-' + dice2 + '.png';
 
         // Update roundScore with dice value and assign to current score of active player
-        roundScore += dice;
+        roundScore += dice1;
 
-        console.log("Dice: " + dice);
-        console.log("Last dice: " + lastDice);
+        console.log("Dice 1: " + dice1);
+        console.log("Dice 2: " + dice2);
+        console.log("Last dice 1: " + lastDice1);
+        console.log("Last dice 2: " + lastDice2);
 
-        if(lastDice === 6 && dice === 6) {
+        if((lastDice1 === 6 && dice1 === 6) || (lastDice2 === 6 && dice2 === 6) ||
+           (lastDice1 === 6 && dice2 === 6) || (lastDice2 === 6 && dice1 === 6)) {
             document.getElementById('score-' + activePlayer).textContent = '0';
             scores[activePlayer] = 0;
             document.getElementById('current-' + activePlayer).textContent = '0';
             roundScore = 0;
             nextPlayer();
-        }else if(dice !== 1) {
+        }else if(dice1 !== 1 || dice2 !== 1) {
             // Active player keeps rolling until he/ she get a number 1
+            roundScore += dice1 + dice2;
             document.getElementById('current-' + activePlayer).textContent = roundScore;
         }else {
             nextPlayer();
         }
 
         // Add value to lastDice to compare on next roll
-        lastDice = dice;
+        lastDice1 = dice1;
+        lastDice2 = dice2;
     }else {
         alert("Click on NEW GAME to begin!");
     }
@@ -139,7 +150,8 @@ function nextPlayer() {
         document.querySelector('.player-1-panel').classList.remove('active');
     }*/
 
-    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('dice-1').style.display = 'none';
+    document.getElementById('dice-2').style.display = 'none';
 
     //Toggle means if it's there -> remove, if it's NOT there -> add
     document.querySelector('.player-0-panel').classList.toggle('active');
@@ -151,11 +163,13 @@ function resetValues() {
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;
-    lastDice = 0;
+    lastDice1 = 0;
+    lastDice2 = 0;
     winningScore = "";
 
     // Hide the dice before game starts
-    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('dice-1').style.display = 'none';
+    document.getElementById('dice-2').style.display = 'none';
 
     // Set the scores to 0
     document.getElementById('score-0').textContent = '0';
