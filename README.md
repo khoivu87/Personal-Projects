@@ -4,3 +4,4 @@
 --------------------
 19/06/2018
 -> Added new folder "GoogleMap" to tinker with Google Maps API
+-> Finished challenge 03
