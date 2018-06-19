@@ -8,7 +8,8 @@ https://www.w3schools.com/graphics/google_maps_overlays.asp*/
 
 // Initialize and add the map
 var map, infoWindow, marker, myLocation, hcm;
-var latit = 10.8797000, longit = 106.7952000;
+var ncvLat = 10.8797000, ncvLong = 106.7952000;
+var suLat = 10.8148859, suLong = 106.6669932;
 //lat: -34.397, lng: 150.644;
 
 function initMap() {
@@ -21,7 +22,7 @@ function initMap() {
   var marker = new google.maps.Marker({position: uluru, map: map});*/
 
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: latit, lng: longit},
+        center: {lat: ncvLat, lng: ncvLong},
         zoom: 14,
         gestureHandling: 'greedy',
         zoomControl: true,
@@ -52,8 +53,10 @@ function initMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
+                /*lat: position.coords.latitude,
+                lng: position.coords.longitude*/
+                lat: suLat,
+                lng: suLong
             };
 
             infoWindow.setPosition(pos);
