@@ -1,7 +1,0 @@
-organization=khoivu87-github
-projectKey=PERPROJ
-serverUrl=https://sonarcloud.io
-serverVersion=7.3.0.13459
-dashboardUrl=https://sonarcloud.io/dashboard?id=PERPROJ
-ceTaskId=AWQmfJT6HlEhtnAoG8F8
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWQmfJT6HlEhtnAoG8F8
